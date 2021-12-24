@@ -1,0 +1,45 @@
+{
+  "name": "balm-error-handler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balmjs/balm-error-handler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/balmjs/balm-error-handler/issues"
+  },
+  "homepage": "https://github.com/balmjs/balm-error-handler#readme",
+  "devDependencies": {
+    "@babel/runtime-corejs3": "^7.16.0",
+    "axios": "^0.24.0",
+    "babel-plugin-prismjs": "^2.1.0",
+    "balm": "3.20.0",
+    "balm-ui": "^8.47.1",
+    "core-js": "^3.20.0",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.2.0",
+    "html-loader": "1",
+    "markdown-loader": "^6.0.0",
+    "prettier": "^2.5.0",
+    "prismjs": "^1.25.0",
+    "vue": "2",
+    "vue-loader": "15",
+    "vue-router": "3",
+    "vue-template-compiler": "2",
+    "webpack": "4"
+  },
+  "dependencies": {
+    "delegate": "^3.2.0",
+    "dexie": "^3.2.0"
+  }
+}
