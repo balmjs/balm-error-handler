@@ -1,3 +1,5 @@
+import db from './db';
+
 function saveLog(...data) {
   const logData = {
     url: window.location.href,

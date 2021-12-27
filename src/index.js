@@ -3,8 +3,9 @@ import resource from './resource';
 import promise from './promise';
 import http from './http';
 import iframe from './iframe';
+import vue from './vue';
 
-function initScriptErrorHandler(options = {}) {
+function initBalmErrorTracking() {
   common();
   resource();
   promise();
@@ -18,5 +19,9 @@ function captureIframeError() {
   iframe();
 }
 
-export default initScriptErrorHandler;
-export { captureHttpError, captureIframeError };
+function captureVueError(app) {
+  vue(app);
+}
+
+export default initBalmErrorTracking;
+export { captureHttpError, captureIframeError, captureVueError };

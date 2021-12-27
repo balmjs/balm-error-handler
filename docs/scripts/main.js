@@ -4,13 +4,15 @@ import router from '@/routes';
 import $http from '@/plugins/http';
 import App from '@/views/layouts/app';
 import prismjs from 'prismjs';
+import { captureVueError } from '../../src';
 // BalmUI
 import BalmUI from 'balm-ui';
 import BalmUIPlus from 'balm-ui-plus';
 // Custom components
 import UiMarkdown from '@/components/markdown';
 import UiSnippet from '@/components/snippet';
-import VEditor from '@/components/editor';
+
+captureVueError(Vue);
 
 function createApp() {
   Vue.prototype.$prism = prismjs;
@@ -21,7 +23,6 @@ function createApp() {
 
   Vue.component(UiMarkdown.name, UiMarkdown);
   Vue.component(UiSnippet.name, UiSnippet);
-  Vue.component(VEditor.name, VEditor);
 
   new Vue({
     el: '#app',

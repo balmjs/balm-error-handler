@@ -1,7 +1,6 @@
 <template>
   <div class="page--home">
-    <h2>Hello VEditor</h2>
-    <v-editor></v-editor>
+    <h2>Hello Balm Error Tracking</h2>
     <ui-markdown :text="docs"></ui-markdown>
     <ui-snippet :code="code"></ui-snippet>
   </div>

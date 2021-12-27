@@ -1,22 +1,26 @@
 {
-  "name": "balm-error-handler",
+  "name": "balm-error-tracking",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "balm",
+    "prod": "balm -p"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/balmjs/balm-error-handler.git"
+    "url": "git+https://github.com/balmjs/balm-error-tracking.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/balmjs/balm-error-handler/issues"
+    "url": "https://github.com/balmjs/balm-error-tracking/issues"
   },
-  "homepage": "https://github.com/balmjs/balm-error-handler#readme",
+  "dependencies": {
+    "delegate": "^3.2.0",
+    "dexie": "^3.2.0"
+  },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.16.0",
     "axios": "^0.24.0",
@@ -37,9 +41,5 @@
     "vue-router": "3",
     "vue-template-compiler": "2",
     "webpack": "4"
-  },
-  "dependencies": {
-    "delegate": "^3.2.0",
-    "dexie": "^3.2.0"
   }
 }

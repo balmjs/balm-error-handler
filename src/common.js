@@ -1,7 +1,9 @@
 import { saveLog } from './log';
 import { isProd } from './env';
 
-function common({ name = 'common' }, target = window) {
+function common(name = 'common') {
+  const target = name === 'iframe' ? window.frames[0] : window;
+
   target.onerror = function (message, source, lineno, colno, error) {
     const msg = message.toLowerCase();
 
