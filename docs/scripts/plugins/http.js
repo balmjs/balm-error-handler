@@ -1,9 +1,5 @@
 import axios from 'axios';
-import { captureHttpError } from '../../../src';
-
-function errorHandler(error) {
-  console.log('http error', error);
-}
+import { saveErrorLog } from '../../../src';
 
 export default {
   install(Vue) {
@@ -23,7 +19,26 @@ export default {
         return response.data;
       },
       (error) => {
-        captureHttpError(() => errorHandler(error));
+        if (error.response) {
+          saveErrorLog({
+            name: 'http',
+            message: 'response error',
+            error
+          });
+        } else if (error.request) {
+          saveErrorLog({
+            name: 'http',
+            message: 'request error',
+            error
+          });
+        } else {
+          saveErrorLog({
+            name: 'http',
+            message: 'unknown error',
+            error
+          });
+        }
+
         return Promise.reject(error);
       }
     );

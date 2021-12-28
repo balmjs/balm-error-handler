@@ -1,18 +1,24 @@
+import config from './config';
 import common from './common';
 import resource from './resource';
 import promise from './promise';
 import http from './http';
 import iframe from './iframe';
 import vue from './vue';
+import stuck from './stuck';
+import SWCrashService from './crash';
+import { saveErrorLog } from './log';
+
+let isTracking = false;
 
 function initBalmErrorTracking() {
   common();
   resource();
   promise();
-}
-
-function captureHttpError(fn) {
-  http(fn);
+  http();
+  iframe();
+  stuck();
+  new SWCrashService();
 }
 
 function captureIframeError() {
@@ -23,5 +29,9 @@ function captureVueError(app) {
   vue(app);
 }
 
-export default initBalmErrorTracking;
-export { captureHttpError, captureIframeError, captureVueError };
+if (!isTracking) {
+  isTracking = true;
+  initBalmErrorTracking();
+}
+
+export { config, saveErrorLog, captureIframeError, captureVueError };

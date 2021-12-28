@@ -1,4 +1,4 @@
-import { saveLog } from './log';
+import { saveErrorLog } from './log';
 
 const rAF = (() => {
   const requestAnimationFrame = window.requestAnimationFrame;
@@ -12,7 +12,7 @@ const rAF = (() => {
   }
 })();
 
-const ONE_SECOND = 1000;
+const ONE_SECOND = 1e3;
 
 function stuck() {
   const stuckData = [];
@@ -36,7 +36,7 @@ function stuck() {
       // 连续三次小于 30 上报卡顿（还有一种特殊情况，前面2次卡顿，第三次不卡，接着再连续两次卡顿，也满足）
       if (stuckData.length === 3) {
         const time = `${now - startTime}ms`;
-        saveLog({
+        saveErrorLog({
           name: 'stuck',
           time
         });

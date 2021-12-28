@@ -1,4 +1,4 @@
-import { loadLog } from './log';
+import { loadErrorLog } from './log';
 
 const reportRate = 0.3;
 const reportEndpoint = '/log';
@@ -48,7 +48,7 @@ const reportData = (url, data) => {
 };
 
 function logToServer() {
-  const logs = loadLog();
+  const logs = loadErrorLog();
   for (let i = 0, len = logs.length; i < len; i++) {
     if (Math.random() < reportRate) {
       const logData = logs[i];

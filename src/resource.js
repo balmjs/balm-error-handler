@@ -1,4 +1,4 @@
-import { saveLog } from './log';
+import { saveErrorLog } from './log';
 
 function resource() {
   window.addEventListener(
@@ -15,7 +15,7 @@ function resource() {
 
       const { path } = event;
 
-      saveLog({
+      saveErrorLog({
         name: 'resource',
         src,
         path

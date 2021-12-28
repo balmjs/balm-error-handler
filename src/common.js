@@ -1,5 +1,5 @@
-import { saveLog } from './log';
-import { isProd } from './env';
+import { saveErrorLog } from './log';
+import config from './config';
 
 function common(name = 'common') {
   const target = name === 'iframe' ? window.frames[0] : window;
@@ -8,13 +8,13 @@ function common(name = 'common') {
     const msg = message.toLowerCase();
 
     if (msg.indexOf('script error') === -1) {
-      saveLog({
+      saveErrorLog({
         name,
         message,
         error: JSON.stringify(error)
       });
 
-      if (isProd) {
+      if (config.isProd) {
         return true;
       }
     }

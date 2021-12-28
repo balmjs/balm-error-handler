@@ -1,6 +1,6 @@
 import db from './db';
 
-function saveLog(...data) {
+function saveErrorLog(...data) {
   const logData = {
     url: window.location.href,
     ...data
@@ -9,6 +9,6 @@ function saveLog(...data) {
   console.log(logData);
 }
 
-function loadLog() {}
+function loadErrorLog() {}
 
-export { saveLog, loadLog };
+export { saveErrorLog, loadErrorLog };

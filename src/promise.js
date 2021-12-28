@@ -1,16 +1,16 @@
-import { saveLog } from './log';
-import { isProd } from './env';
+import { saveErrorLog } from './log';
+import config from './config';
 
 function promise() {
   window.addEventListener('unhandledrejection', (event) => {
     const { reason } = event;
 
-    saveLog({
+    saveErrorLog({
       name: 'promise',
       reason
     });
 
-    if (isProd) {
+    if (config.isProd) {
       event.preventDefault();
     }
   });

@@ -1,5 +1,5 @@
+import { v4 as getUUID } from 'uuid';
 import delegate from 'delegate';
-import { getUUID } from '@/utils'; // TODO: your code
 
 const HEART_INTERVAL = 10000;
 
@@ -28,7 +28,7 @@ class SWCrashService {
   }
 
   init() {
-    const sessionId = getUUID(); // e.g. `${location.href}-${uuid()}`
+    const sessionId = getUUID();
 
     const heartbeat = () => {
       // collectData 为传入自定义函数用于包装埋点数据，比如 url, UA 等
@@ -68,4 +68,4 @@ class SWCrashService {
   }
 }
 
-new SWCrashService();
+export default SWCrashService;

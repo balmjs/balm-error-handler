@@ -12,9 +12,9 @@ import BalmUIPlus from 'balm-ui-plus';
 import UiMarkdown from '@/components/markdown';
 import UiSnippet from '@/components/snippet';
 
-captureVueError(Vue);
-
 function createApp() {
+  captureVueError(Vue);
+
   Vue.prototype.$prism = prismjs;
 
   Vue.use($http);
