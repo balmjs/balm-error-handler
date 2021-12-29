@@ -1,16 +1,19 @@
 import { saveErrorLog } from './log';
-import config from './config';
+import { getConfig } from './config';
 
 function promise() {
+  const { printErrors } = getConfig();
+
   window.addEventListener('unhandledrejection', (event) => {
     const { reason } = event;
 
     saveErrorLog({
       name: 'promise',
-      reason
+      message: 'unhandled rejection',
+      error: reason
     });
 
-    if (config.isProd) {
+    if (printErrors) {
       event.preventDefault();
     }
   });

@@ -1,10 +1,12 @@
 import { saveErrorLog } from './log';
-import config from './config';
+import { getConfig } from './config';
 
 function common(name = 'common') {
   const target = name === 'iframe' ? window.frames[0] : window;
 
   if (target) {
+    const { printErrors } = getConfig();
+
     target.onerror = function (message, source, lineno, colno, error) {
       const msg = message.toLowerCase();
 
@@ -15,8 +17,8 @@ function common(name = 'common') {
           error: JSON.stringify(error)
         });
 
-        if (config.isProd) {
-          return true;
+        if (printErrors) {
+          return true; // 异常不继续冒泡，浏览器默认打印机制就会取消
         }
       }
     };

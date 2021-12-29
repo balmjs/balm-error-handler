@@ -38,7 +38,7 @@ function stuck() {
         const time = `${now - startTime}ms`;
         saveErrorLog({
           name: 'stuck',
-          time
+          message: time
         });
         // 清空采集到的卡顿数据
         stuckData.length = 0;
@@ -47,7 +47,7 @@ function stuck() {
       const timer = setTimeout(() => {
         loop();
         clearTimeout(timer);
-      }, 60 * 1000);
+      }, 60 * ONE_SECOND);
       return;
     }
     rAF(() => loop(startCountTime, nowFrameCount));

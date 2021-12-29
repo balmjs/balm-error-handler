@@ -17,12 +17,12 @@ function resource() {
 
       saveErrorLog({
         name: 'resource',
-        src,
-        path
+        message: src,
+        error: path
       });
     },
     true
-  );
+  ); // 关于这里为什么不可以用 e.preventDefault() 来阻止默认打印，是因为这个错误，我们是捕获阶段获取到的，而不是冒泡
 }
 
 export default resource;

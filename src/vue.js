@@ -6,7 +6,7 @@ function vue(app) {
     saveErrorLog({
       name: 'vue',
       message,
-      stack
+      error: stack
     });
   };
 }

@@ -1,11 +1,18 @@
-class BalmErrorConfig {
-  isProd = false;
+const defaultOptions = {
+  debug: false,
+  printErrors: false,
+  reportRate: 1,
+  reportEndpoint: '/log'
+};
 
-  set({ isProd }) {
-    this.isProd = isProd;
-  }
+let options = {};
+
+function setConfig(newOptions = {}) {
+  options = Object.assign(defaultOptions, newOptions);
 }
 
-const config = new BalmErrorConfig();
+function getConfig() {
+  return options;
+}
 
-export default config;
+export { getConfig, setConfig };

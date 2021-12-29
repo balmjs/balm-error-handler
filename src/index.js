@@ -1,37 +1,18 @@
-import config from './config';
-import common from './common';
-import resource from './resource';
-import promise from './promise';
-import http from './http';
-import iframe from './iframe';
-import vue from './vue';
-import stuck from './stuck';
-import SWCrashService from './crash';
+import { setConfig } from './config';
 import { saveErrorLog } from './log';
+import {
+  captureScriptErrors,
+  captureIframeError,
+  captureVueError
+} from './capture';
+import reportScriptErrors from './report';
 
-let isTracking = false;
+function initBalmTracking(options = {}) {
+  setConfig(options);
 
-function initBalmTracking() {
-  common();
-  resource();
-  promise();
-  http();
-  iframe();
-  stuck();
-  new SWCrashService();
+  captureScriptErrors();
+  reportScriptErrors();
 }
 
-function captureIframeError() {
-  iframe();
-}
-
-function captureVueError(app) {
-  vue(app);
-}
-
-if (!isTracking) {
-  isTracking = true;
-  initBalmTracking();
-}
-
-export { config, saveErrorLog, captureIframeError, captureVueError };
+export default initBalmTracking;
+export { saveErrorLog, captureIframeError, captureVueError };

@@ -1,7 +1,5 @@
 import { loadErrorLog } from './log';
-
-const reportRate = 0.3;
-const reportEndpoint = '/log';
+import { getConfig } from './config';
 
 function reportBySendBeacon(url, data) {
   navigator.sendBeacon(url, data);
@@ -48,6 +46,12 @@ const reportData = (url, data) => {
 };
 
 function logToServer() {
+  const { debug, reportRate, reportEndpoint } = getConfig();
+
+  if (debug) {
+    alert('logToServer');
+  }
+
   const logs = loadErrorLog();
   for (let i = 0, len = logs.length; i < len; i++) {
     if (Math.random() < reportRate) {
@@ -57,4 +61,8 @@ function logToServer() {
   }
 }
 
-window.addEventListener('unload', logToServer, false);
+function reportScriptErrors() {
+  window.addEventListener('unload', logToServer, false);
+}
+
+export default reportScriptErrors;
