@@ -11,7 +11,7 @@ import { saveErrorLog } from './log';
 
 let isTracking = false;
 
-function initBalmErrorTracking() {
+function initBalmTracking() {
   common();
   resource();
   promise();
@@ -31,7 +31,7 @@ function captureVueError(app) {
 
 if (!isTracking) {
   isTracking = true;
-  initBalmErrorTracking();
+  initBalmTracking();
 }
 
 export { config, saveErrorLog, captureIframeError, captureVueError };
