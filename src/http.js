@@ -1,4 +1,4 @@
-import { saveErrorLog } from './log';
+import saveErrorLog from './log';
 
 function http() {
   const originFetch = window.fetch;

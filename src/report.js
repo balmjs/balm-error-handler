@@ -1,4 +1,4 @@
-import { loadErrorLog } from './log';
+import db from './db';
 import { getConfig } from './config';
 
 function reportBySendBeacon(url, data) {
@@ -21,7 +21,8 @@ function reportByAjax(url, data) {
       headers: {
         'Content-Type': contentType
       },
-      body
+      body,
+      keepalive: true
     });
   } else {
     const xhr = new XMLHttpRequest();
@@ -45,24 +46,26 @@ const reportData = (url, data) => {
   }
 };
 
-function logToServer() {
-  const { debug, reportRate, reportEndpoint } = getConfig();
+async function logToServer() {
+  console.log('logToServer');
+  const count = await db.logs.count();
 
-  if (debug) {
-    alert('logToServer');
-  }
+  if (count) {
+    const { debug, reportRate, reportEndpoint } = getConfig();
 
-  const logs = loadErrorLog();
-  for (let i = 0, len = logs.length; i < len; i++) {
-    if (Math.random() < reportRate) {
-      const logData = logs[i];
-      reportData(reportEndpoint, logData);
-    }
+    await db.logs.each((logData) => {
+      if (Math.random() < reportRate) {
+        reportData(reportEndpoint, logData);
+      }
+    });
+
+    // db.logs.clear();
   }
 }
 
 function reportScriptErrors() {
-  window.addEventListener('unload', logToServer, false);
+  const event = navigator.sendBeacon ? 'unload' : 'beforeunload';
+  window.addEventListener(event, logToServer, false);
 }
 
 export default reportScriptErrors;

@@ -1,4 +1,4 @@
-import { saveErrorLog } from './log';
+import saveErrorLog from './log';
 
 const rAF = (() => {
   const requestAnimationFrame = window.requestAnimationFrame;

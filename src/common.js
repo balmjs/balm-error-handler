@@ -1,4 +1,4 @@
-import { saveErrorLog } from './log';
+import saveErrorLog from './log';
 import { getConfig } from './config';
 
 function common(name = 'common') {

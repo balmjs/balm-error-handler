@@ -1,5 +1,5 @@
 import { setConfig } from './config';
-import { saveErrorLog } from './log';
+import saveErrorLog from './log';
 import {
   captureScriptErrors,
   captureIframeError,

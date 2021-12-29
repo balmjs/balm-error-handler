@@ -20,6 +20,4 @@ async function saveErrorLog(data = {}) {
   }
 }
 
-function loadErrorLog() {}
-
-export { saveErrorLog, loadErrorLog };
+export default saveErrorLog;
