@@ -32,39 +32,58 @@ function reportByAjax(url, data) {
   }
 }
 
-const reportData = (url, data) => {
+const reportData = (event, url, data) => {
   if (navigator.sendBeacon) {
-    reportBySendBeacon(url, data);
+    if (document.visibilityState === 'hidden') {
+      reportBySendBeacon(url, data);
+    }
   } else {
-    const dataStr = JSON.stringify(data);
-    const src = `${url}?log=${dataStr}`;
-    if (src.length < 2083) {
-      reportByImage(src);
-    } else {
-      reportByAjax(url, data);
+    if (event.persisted) {
+      const dataStr = JSON.stringify(data);
+      const src = `${url}?log=${dataStr}`;
+      if (src.length < 2083) {
+        reportByImage(src);
+      } else {
+        reportByAjax(url, data);
+      }
     }
   }
 };
 
-async function logToServer() {
-  console.log('logToServer');
-  const count = await db.logs.count();
+function logToServer(event) {
+  const { debug, reportRate, reportEndpoint } = getConfig();
+
+  if (debug) {
+    console.log('logToServer');
+  }
+
+  const count = db.logs.count();
 
   if (count) {
-    const { debug, reportRate, reportEndpoint } = getConfig();
-
-    await db.logs.each((logData) => {
+    db.logs.each((logData) => {
       if (Math.random() < reportRate) {
-        reportData(reportEndpoint, logData);
+        reportData(event, reportEndpoint, logData);
       }
     });
 
     // db.logs.clear();
   }
+
+  if (debug) {
+    db.logs.add({
+      name: 'unload',
+      message: 'gg'
+    });
+  }
+
+  // Cancel the event as stated by the standard.
+  event.preventDefault();
+  // Chrome requires returnValue to be set.
+  event.returnValue = '';
 }
 
 function reportScriptErrors() {
-  const event = navigator.sendBeacon ? 'unload' : 'beforeunload';
+  const event = navigator.sendBeacon ? 'visibilitychange' : 'pagehide';
   window.addEventListener(event, logToServer, false);
 }
 

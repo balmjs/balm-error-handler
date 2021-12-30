@@ -1,6 +1,6 @@
 import saveErrorLog from './log';
 
-function vue(app) {
+function vue(app, router = null) {
   app.config.errorHandler = (err, vm, info) => {
     const { message, stack } = err;
     saveErrorLog({
@@ -8,6 +8,13 @@ function vue(app) {
       message,
       error: stack
     });
+
+    // TODO
+    // saveErrorLog({
+    //   name: 'router',
+    //   from: '',
+    //   to: ''
+    // });
   };
 }
 
