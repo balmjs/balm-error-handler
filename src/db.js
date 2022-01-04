@@ -1,33 +1,37 @@
 import Dexie from 'dexie';
 
-class BalmTrackingDB {
+const DB_NAME = 'BalmTracking';
+
+let instance;
+
+class BalmTrackingDatabase {
   constructor() {
-    this.instance = null;
-
-    balmTrackingDB
-      .open()
-      .catch((e) => console.error(`Open failed: ${e.stack}`));
-
-    return balmTrackingDB;
+    return this.createDatabase();
   }
 
-  createDB() {
-    const balmTrackingDB = new Dexie('BalmTracking');
+  createDatabase() {
+    const db = new Dexie(DB_NAME);
 
-    balmTrackingDB.version(1).stores({
+    db.version(1).stores({
       logs: '++id, url, name, message, error',
       routes: '++id, from, to'
     });
+
+    db.open().catch((error) =>
+      console.error(`Open failed: ${error.stack || error}`)
+    );
+
+    return db;
   }
 
   static getInstance() {
-    if (this.instance === null) {
-      this.instance = new BalmTrackingDB();
+    if (instance === undefined) {
+      instance = new BalmTrackingDatabase();
     }
-    return this.instance;
+    return instance;
   }
 }
 
-const db = BalmTrackingDB.getInstance();
+const db = BalmTrackingDatabase.getInstance();
 
 export default db;
