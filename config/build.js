@@ -6,7 +6,7 @@ const { babel } = require('@rollup/plugin-babel');
 const banner =
   '/*!\n' +
   ` * BalmUI v${pkg.version}\n` +
-  ` * (c) 2022-${new Date().getFullYear()} N.Elf-mousE\n` +
+  ` * (c) 2021-${new Date().getFullYear()} N.Elf-mousE\n` +
   ' * Released under the MIT License.\n' +
   ' */';
 
