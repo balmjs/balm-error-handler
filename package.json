@@ -20,6 +20,7 @@
   "dependencies": {
     "delegate": "^3.2.0",
     "dexie": "^3.2.0",
+    "page-lifecycle": "^0.1.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

@@ -1,8 +1,14 @@
+import lifecycle from 'page-lifecycle';
 import db from './db';
 import { getConfig } from './config';
 
+const contentType = 'application/json; charset=UTF-8';
+
 function reportBySendBeacon(url, data) {
-  navigator.sendBeacon(url, data);
+  const blob = new Blob([JSON.stringify(data)], {
+    type: contentType
+  });
+  navigator.sendBeacon(url, blob);
 }
 
 function reportByImage(src) {
@@ -12,7 +18,6 @@ function reportByImage(src) {
 
 function reportByAjax(url, data) {
   const method = 'POST';
-  const contentType = 'application/json;charset=UTF-8';
   const body = JSON.stringify(data);
 
   if (window.fetch) {
@@ -32,59 +37,57 @@ function reportByAjax(url, data) {
   }
 }
 
-const reportData = (event, url, data) => {
+const reportData = (url, data) => {
   if (navigator.sendBeacon) {
-    if (document.visibilityState === 'hidden') {
-      reportBySendBeacon(url, data);
-    }
+    reportBySendBeacon(url, data);
   } else {
-    if (event.persisted) {
-      const dataStr = JSON.stringify(data);
-      const src = `${url}?log=${dataStr}`;
-      if (src.length < 2083) {
-        reportByImage(src);
-      } else {
-        reportByAjax(url, data);
-      }
+    const dataStr = JSON.stringify(data);
+    const src = `${url}?log=${dataStr}`;
+    if (src.length < 2083) {
+      reportByImage(src);
+    } else {
+      reportByAjax(url, data);
     }
   }
 };
 
-function logToServer(event) {
+async function logToServer() {
   const { debug, reportRate, reportEndpoint } = getConfig();
 
   if (debug) {
-    console.log('logToServer');
+    console.log('before logToServer');
   }
 
-  const count = db.logs.count();
+  const count = await db.logs.count().catch((e) => {
+    console.error('count error', e);
+  });
 
   if (count) {
-    db.logs.each((logData) => {
+    await db.logs.each((logData) => {
       if (Math.random() < reportRate) {
-        reportData(event, reportEndpoint, logData);
+        reportData(reportEndpoint, logData);
       }
     });
 
-    // db.logs.clear();
+    await db.logs.clear();
   }
 
   if (debug) {
-    db.logs.add({
-      name: 'unload',
-      message: 'gg'
-    });
+    console.log('after logToServer');
   }
-
-  // Cancel the event as stated by the standard.
-  event.preventDefault();
-  // Chrome requires returnValue to be set.
-  event.returnValue = '';
 }
 
 function reportScriptErrors() {
-  const event = navigator.sendBeacon ? 'visibilitychange' : 'pagehide';
-  window.addEventListener(event, logToServer, false);
+  const { debug } = getConfig();
+
+  lifecycle.addEventListener('statechange', ({ newState }) => {
+    if (debug) {
+      console.log(newState);
+    }
+    if (newState === 'hidden') {
+      logToServer();
+    }
+  });
 }
 
 export default reportScriptErrors;
