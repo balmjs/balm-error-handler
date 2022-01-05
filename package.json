@@ -1,11 +1,12 @@
 {
   "name": "balm-tracking",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "balm",
-    "prod": "balm -p"
+    "prod": "balm -p",
+    "docs": "balm -p --docs"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,11 @@
   },
   "devDependencies": {
     "@babel/runtime-corejs3": "^7.16.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.1.2",
     "axios": "^0.24.0",
+    "babel-eslint": "^10.1.0",
     "babel-plugin-prismjs": "^2.1.0",
     "balm": "3.20.0",
     "balm-ui": "^8.47.1",

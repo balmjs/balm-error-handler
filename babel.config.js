@@ -3,7 +3,7 @@ module.exports = function (api) {
     ? {
         modules: false,
         useBuiltIns: 'usage',
-        corejs: { version: '3.19', proposals: true }
+        corejs: { version: '3.20', proposals: true }
       }
     : {};
   let runtimeOptions = api.env('production') ? { corejs: 3 } : {};

@@ -20,7 +20,7 @@ function getConfig(balm) {
       extname: 'scss'
     },
     scripts: {
-      eslint: true,
+      // lint: true,
       entry: {
         app: './docs/scripts/index.js'
       },
