@@ -1,18 +1,19 @@
 import { setConfig } from './config';
-import saveErrorLog from './log';
-import {
-  captureScriptErrors,
-  captureIframeError,
-  captureVueError
-} from './capture';
-import reportScriptErrors from './report';
+import { saveErrorLog } from './monitoring/logger';
+import captureBehaviors from './behavior';
+import { captureErrors, captureIframeError } from './error';
+import capturePerformances from './performance';
+import report from './monitoring/report';
 
-function initBalmTracking(options = {}) {
+function balmTracking(options = {}) {
   setConfig(options);
 
-  captureScriptErrors();
-  reportScriptErrors();
+  captureBehaviors();
+  captureErrors();
+  capturePerformances();
+
+  report();
 }
 
-export default initBalmTracking;
-export { saveErrorLog, captureIframeError, captureVueError };
+export default balmTracking;
+export { saveErrorLog, captureIframeError };

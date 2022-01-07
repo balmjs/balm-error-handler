@@ -4,7 +4,7 @@ import router from '@/routes';
 import $http from '@/plugins/http';
 import App from '@/views/layouts/app';
 import prismjs from 'prismjs';
-import { captureVueError } from '../../src';
+import balmTracking from '../../src';
 // BalmUI
 import BalmUI from 'balm-ui';
 import BalmUIPlus from 'balm-ui-plus';
@@ -13,7 +13,13 @@ import UiMarkdown from '@/components/markdown';
 import UiSnippet from '@/components/snippet';
 
 function createApp() {
-  captureVueError(Vue);
+  balmTracking({
+    debug: true,
+    vue: {
+      app: Vue,
+      router
+    }
+  });
 
   Vue.prototype.$prism = prismjs;
 

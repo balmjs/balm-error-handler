@@ -2,7 +2,11 @@ const defaultOptions = {
   debug: false,
   printErrors: false,
   reportRate: 1,
-  reportEndpoint: '/log'
+  reportEndpoint: '/log',
+  vue: {
+    app: undefined,
+    router: undefined
+  }
 };
 
 let options = {};

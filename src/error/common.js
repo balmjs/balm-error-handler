@@ -1,7 +1,7 @@
-import saveErrorLog from './log';
-import { getConfig } from './config';
+import { saveErrorLog } from '../monitoring/logger';
+import { getConfig } from '../config';
 
-function common(name = 'common') {
+function captureJsError(name = 'js') {
   const target = name === 'iframe' ? window.frames[0] : window;
 
   if (target) {
@@ -14,7 +14,9 @@ function common(name = 'common') {
         saveErrorLog({
           name,
           message,
-          error: JSON.stringify(error)
+          data: {
+            error: JSON.stringify(error)
+          }
         });
 
         if (printErrors) {
@@ -25,4 +27,4 @@ function common(name = 'common') {
   }
 }
 
-export default common;
+export default captureJsError;

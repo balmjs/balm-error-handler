@@ -1,11 +1,10 @@
-import saveErrorLog from './log';
+import { saveErrorLog } from '../monitoring/logger';
 
-function http() {
-  const originFetch = window.fetch;
+function captureFetchError() {
+  const OriginalFetch = window.fetch;
 
   window.fetch = (...args) => {
-    return originFetch
-      .apply(this, args)
+    return OriginalFetch.apply(this, args)
       .then((response) => {
         return response.ok
           ? response
@@ -14,9 +13,11 @@ function http() {
               .catch(() => {
                 saveErrorLog({
                   name: 'fetch',
-                  message: 'response ok',
-                  error: response,
-                  ...args
+                  message: response.statusText,
+                  data: {
+                    error: response,
+                    ...args
+                  }
                 });
 
                 return Promise.resolve({
@@ -30,9 +31,11 @@ function http() {
               .then((result) => {
                 saveErrorLog({
                   name: 'fetch',
-                  message: 'response error',
-                  error: result,
-                  ...args
+                  message: result.message,
+                  data: {
+                    error: result,
+                    ...args
+                  }
                 });
 
                 return Promise.reject({
@@ -45,8 +48,10 @@ function http() {
         saveErrorLog({
           name: 'fetch',
           message: 'request error',
-          error,
-          ...args
+          data: {
+            error,
+            ...args
+          }
         });
 
         return Promise.reject(error);
@@ -54,4 +59,4 @@ function http() {
   };
 }
 
-export default http;
+export default captureFetchError;

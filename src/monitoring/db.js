@@ -1,4 +1,5 @@
 import Dexie from 'dexie';
+import schema from './schema';
 
 const DB_NAME = 'BalmTracking';
 
@@ -12,10 +13,7 @@ class BalmTrackingDatabase {
   createDatabase() {
     const db = new Dexie(DB_NAME);
 
-    db.version(1).stores({
-      logs: '++id, url, name, message, error',
-      routes: '++id, from, to'
-    });
+    db.version(1).stores(schema);
 
     db.open().catch((error) =>
       console.error(`Open failed: ${error.stack || error}`)

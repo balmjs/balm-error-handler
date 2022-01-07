@@ -1,6 +1,7 @@
-import lifecycle from 'page-lifecycle';
+// import lifecycle from 'page-lifecycle';
 import db from './db';
-import { getConfig } from './config';
+import { getConfig } from '../config';
+import { onBeforeunload, onHidden } from '../utils';
 
 const contentType = 'application/json; charset=UTF-8';
 
@@ -42,7 +43,7 @@ const reportData = (url, data) => {
     reportBySendBeacon(url, data);
   } else {
     const dataStr = JSON.stringify(data);
-    const src = `${url}?log=${dataStr}`;
+    const src = `${url}?data=${dataStr}`;
     if (src.length < 2083) {
       reportByImage(src);
     } else {
@@ -54,40 +55,57 @@ const reportData = (url, data) => {
 async function logToServer() {
   const { debug, reportRate, reportEndpoint } = getConfig();
 
-  if (debug) {
-    console.log('before logToServer');
-  }
-
   const count = await db.logs.count().catch((e) => {
     console.error('count error', e);
   });
 
+  if (debug) {
+    console.log('logToServer', count);
+  }
+
   if (count) {
-    await db.logs.each((logData) => {
+    let logData = [];
+
+    await db.logs.each((log) => {
       if (Math.random() < reportRate) {
-        reportData(reportEndpoint, logData);
+        logData.push(log);
       }
     });
 
-    await db.logs.clear();
-  }
+    if (debug) {
+      console.log('report', logData.length);
+    }
 
-  if (debug) {
-    console.log('after logToServer');
+    if (logData.length) {
+      reportData(reportEndpoint, logData);
+    }
+
+    db.logs.clear();
   }
 }
 
-function reportScriptErrors() {
+function report() {
   const { debug } = getConfig();
 
-  lifecycle.addEventListener('statechange', ({ newState }) => {
-    if (debug) {
-      console.log(newState);
-    }
-    if (newState === 'hidden') {
+  // lifecycle.addEventListener('statechange', ({ newState }) => {
+  //   if (debug) {
+  //     console.log(newState);
+  //   }
+  //   if (newState === 'hidden') {
+  //     logToServer();
+  //   }
+  // });
+
+  // 当页面进入后台或关闭前时，将所有的 cache 数据进行上报
+  [onBeforeunload, onHidden].forEach((fn) => {
+    fn(() => {
+      if (debug) {
+        console.log('gg');
+      }
       logToServer();
-    }
+    });
   });
 }
 
-export default reportScriptErrors;
+export default report;
+export { logToServer };
