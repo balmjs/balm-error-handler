@@ -52,18 +52,12 @@ const reportData = (url, data) => {
   }
 };
 
-async function logToServer() {
-  const { debug, reportRate, reportEndpoint } = getConfig();
+async function logToServer(immediateReport = false) {
+  let result;
 
-  const count = await db.logs.count().catch((e) => {
-    console.error('count error', e);
-  });
+  if (immediateReport) {
+    const { debug, reportRate, reportEndpoint } = getConfig();
 
-  if (debug) {
-    console.log('logToServer', count);
-  }
-
-  if (count) {
     let logData = [];
 
     await db.logs.each((log) => {
@@ -80,8 +74,10 @@ async function logToServer() {
       reportData(reportEndpoint, logData);
     }
 
-    db.logs.clear();
+    result = await db.logs.clear();
   }
+
+  return result;
 }
 
 function report() {
@@ -98,11 +94,16 @@ function report() {
 
   // 当页面进入后台或关闭前时，将所有的 cache 数据进行上报
   [onBeforeunload, onHidden].forEach((fn) => {
-    fn(() => {
+    fn(async () => {
+      const count = await db.logs.count().catch((e) => {
+        console.error('count error', e);
+      });
+
       if (debug) {
-        console.log('gg');
+        console.log('logToServer', count);
       }
-      logToServer();
+
+      logToServer(count);
     });
   });
 }

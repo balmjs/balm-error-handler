@@ -15,6 +15,7 @@ import UiSnippet from '@/components/snippet';
 function createApp() {
   balmTracking({
     debug: true,
+    reportThreshold: 10,
     vue: {
       app: Vue,
       router

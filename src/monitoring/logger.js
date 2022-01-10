@@ -1,12 +1,13 @@
 import { v4 as getUUID } from 'uuid';
 import db from './db';
 import { getConfig } from './config';
+import { logToServer } from './report';
 
 async function saveLog(type, data = {}) {
   let result;
 
-  const { debug } = getConfig();
-
+  const { debug, reportThreshold } = getConfig();
+  const tableName = `${type}Logs`;
   const logData = Object.assign(
     {
       type,
@@ -23,13 +24,15 @@ async function saveLog(type, data = {}) {
   );
 
   try {
+    const count = await db.logs.count();
+    const immediateReport = count > reportThreshold;
+    await logToServer(immediateReport);
+
     result = await db.logs.add(logData);
 
     if (debug) {
       console.log('Log saved:', logData);
     }
-
-    // TODO: auto report
   } catch (e) {
     console.error(`Save failed: ${e}`);
   }

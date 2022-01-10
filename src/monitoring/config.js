@@ -1,8 +1,9 @@
 const defaultOptions = {
   debug: false,
   printErrors: false,
-  reportRate: 1,
   reportEndpoint: '/log',
+  reportRate: 1,
+  reportThreshold: 1024,
   vue: {
     app: undefined,
     router: undefined
