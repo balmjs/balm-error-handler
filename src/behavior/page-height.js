@@ -1,4 +1,4 @@
-import { saveBehaviorLog } from '../monitoring/logger';
+import { saveBehaviorLog } from '../monitoring';
 import {
   onBeforeunload,
   executeAfterLoad,

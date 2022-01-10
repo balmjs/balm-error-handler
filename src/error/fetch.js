@@ -1,4 +1,4 @@
-import { saveErrorLog } from '../monitoring/logger';
+import { saveErrorLog } from '../monitoring';
 
 function captureFetchError() {
   const OriginalFetch = window.fetch;

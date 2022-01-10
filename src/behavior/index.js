@@ -1,4 +1,4 @@
-import { getConfig } from '../config';
+import { getConfig } from '../monitoring';
 import pv from './pv';
 import onPageDuration from './page-duration';
 import onPageHeight from './page-height';

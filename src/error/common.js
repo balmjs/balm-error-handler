@@ -1,5 +1,4 @@
-import { saveErrorLog } from '../monitoring/logger';
-import { getConfig } from '../config';
+import { getConfig, saveErrorLog } from '../monitoring';
 
 function captureJsError(name = 'js') {
   const target = name === 'iframe' ? window.frames[0] : window;

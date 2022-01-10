@@ -1,8 +1,10 @@
 import { v4 as getUUID } from 'uuid';
 import db from './db';
-import { getConfig } from '../config';
+import { getConfig } from './config';
 
 async function saveLog(type, data = {}) {
+  let result;
+
   const { debug } = getConfig();
 
   const logData = Object.assign(
@@ -21,7 +23,7 @@ async function saveLog(type, data = {}) {
   );
 
   try {
-    await db.logs.add(logData);
+    result = await db.logs.add(logData);
 
     if (debug) {
       console.log('Log saved:', logData);
@@ -31,19 +33,15 @@ async function saveLog(type, data = {}) {
   } catch (e) {
     console.error(`Save failed: ${e}`);
   }
+
+  return result;
 }
 
-function savePerformanceLog(data = {}) {
-  saveLog('performance', data);
-}
+const savePerformanceLog = async (data = {}) =>
+  await saveLog('performance', data);
 
-function saveErrorLog(data = {}) {
-  saveLog('error', data);
-}
+const saveErrorLog = async (data = {}) => await saveLog('error', data);
 
-function saveBehaviorLog(data = {}) {
-  saveLog('behavior', data);
-}
+const saveBehaviorLog = async (data = {}) => await saveLog('behavior', data);
 
-export default saveLog;
 export { savePerformanceLog, saveErrorLog, saveBehaviorLog };

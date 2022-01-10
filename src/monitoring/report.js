@@ -1,6 +1,6 @@
 // import lifecycle from 'page-lifecycle';
 import db from './db';
-import { getConfig } from '../config';
+import { getConfig } from './config';
 import { onBeforeunload, onHidden } from '../utils';
 
 const contentType = 'application/json; charset=UTF-8';

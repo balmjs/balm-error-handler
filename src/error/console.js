@@ -1,4 +1,4 @@
-import { saveErrorLog } from '../monitoring/logger';
+import { saveErrorLog } from '../monitoring';
 
 function captureConsoleError() {
   const OriginalConsoleError = window.console.error;

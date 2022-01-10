@@ -1,4 +1,4 @@
-import { getConfig } from '../config';
+import { getConfig } from '../monitoring';
 // import captureConsoleError from './console';
 import captureJsError from './common';
 import captureResourceError from './resource';
@@ -10,12 +10,12 @@ import SWCrashService from './crash';
 import { onBFCacheRestore } from '../utils';
 
 function captureErrors() {
-  const { vue } = getConfig();
+  const { printErrors, vue } = getConfig();
 
   // captureConsoleError();
   captureJsError();
   captureResourceError();
-  capturePromiseError();
+  capturePromiseError(printErrors);
   captureFetchError();
   vue.app && captureVueError(vue.app);
   new SWCrashService();

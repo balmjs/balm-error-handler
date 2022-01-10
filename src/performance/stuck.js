@@ -1,4 +1,4 @@
-import { savePerformanceLog } from '../monitoring/logger';
+import { savePerformanceLog } from '../monitoring';
 
 const rAF = (() => {
   const requestAnimationFrame = window.requestAnimationFrame;

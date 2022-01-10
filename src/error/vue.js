@@ -1,4 +1,4 @@
-import { saveErrorLog } from '../monitoring/logger';
+import { saveErrorLog } from '../monitoring';
 
 function captureVueError(app) {
   app.config.errorHandler = (err, vm, info) => {

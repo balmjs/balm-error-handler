@@ -1,9 +1,6 @@
-import { saveErrorLog } from '../monitoring/logger';
-import { getConfig } from '../config';
+import { saveErrorLog } from '../monitoring';
 
-function capturePromiseError() {
-  const { printErrors } = getConfig();
-
+function capturePromiseError(printErrors) {
   window.addEventListener('unhandledrejection', (event) => {
     const { reason, timeStamp } = event;
 

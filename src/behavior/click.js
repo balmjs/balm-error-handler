@@ -1,4 +1,4 @@
-import { saveBehaviorLog } from '../monitoring/logger';
+import { saveBehaviorLog } from '../monitoring';
 import { getPageHeight, getScrollTop, getPaths } from '../utils';
 
 function onClick() {

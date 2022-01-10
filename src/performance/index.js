@@ -1,4 +1,4 @@
-import { getConfig } from '../config';
+import { getConfig } from '../monitoring';
 import captureStuck from './stuck';
 
 function capturePerformances() {

@@ -1,4 +1,4 @@
-import { saveBehaviorLog } from '../monitoring/logger';
+import { saveBehaviorLog } from '../monitoring';
 
 export default function pv() {
   saveBehaviorLog({

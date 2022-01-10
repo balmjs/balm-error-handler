@@ -1,4 +1,4 @@
-import { saveBehaviorLog } from '../monitoring/logger';
+import { saveBehaviorLog } from '../monitoring';
 
 function onVueRouter(router) {
   router.beforeEach((to, from, next) => {
