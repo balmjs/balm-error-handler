@@ -2,7 +2,7 @@ const defaultOptions = {
   debug: false,
   printErrors: false,
   reportEndpoint: '/log',
-  reportRate: 1,
+  reportRate: 1.0,
   reportThreshold: 1000,
   vue: {
     app: undefined,

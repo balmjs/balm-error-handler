@@ -5,12 +5,17 @@
 ## Usage
 
 ```js
-import initBalmTracking from 'balm-tracking';
+import balmTracking from 'balm-tracking';
 
-initBalmTracking({
+balmTracking({
   printErrors: false,
-  reportRate: 1, // range: [0, 1]
-  reportEndpoint: '/log' // replace your api
+  reportEndpoint: '/log', // replace your api,
+  reportRate: 1.0, // range: [0, 1]
+  reportThreshold: 1000,
+  vue: {
+    app, // Vue app
+    router // Vue router
+  }
 });
 ```
 

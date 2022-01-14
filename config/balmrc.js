@@ -2,6 +2,7 @@ const env = require('./env');
 const path = require('path');
 const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
+const serve = require('./server');
 
 const workspace = path.join(__dirname, '..');
 
@@ -14,6 +15,13 @@ function getConfig(balm) {
 
   return {
     useDefaults: !useBuild,
+    server: {
+      next() {
+        if (balm.config.env.isDev) {
+          serve();
+        }
+      }
+    },
     roots: {
       source: 'docs'
     },

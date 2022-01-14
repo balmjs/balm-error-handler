@@ -16,6 +16,8 @@ function createBalmTrackingApp() {
 
   balmTracking({
     debug: true,
+    reportEndpoint: 'http://localhost:8080/log',
+    reportRate: 1.0,
     reportThreshold: 100,
     vue: {
       app,
