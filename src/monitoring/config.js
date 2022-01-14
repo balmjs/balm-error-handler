@@ -3,7 +3,7 @@ const defaultOptions = {
   printErrors: false,
   reportEndpoint: '/log',
   reportRate: 1,
-  reportThreshold: 1024,
+  reportThreshold: 1000,
   vue: {
     app: undefined,
     router: undefined

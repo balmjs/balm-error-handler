@@ -7,7 +7,6 @@ async function saveLog(type, data = {}) {
   let result;
 
   const { debug, reportThreshold } = getConfig();
-  const tableName = `${type}Logs`;
   const logData = Object.assign(
     {
       type,
