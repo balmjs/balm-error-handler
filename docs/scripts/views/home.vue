@@ -6,17 +6,7 @@
   </div>
 </template>
 
-<script>
-const docs = require(`@/docs/demo.md`);
-const code = require(`@/snippets/demo.md`);
-
-export default {
-  name: 'Home',
-  data() {
-    return {
-      docs,
-      code
-    };
-  }
-};
+<script setup>
+import docs from '@/docs/demo.md';
+import code from '@/snippets/demo.md';
 </script>

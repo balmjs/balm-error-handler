@@ -28,24 +28,35 @@
       >
         <ui-drawer-content>
           <ui-nav class="catalog-list">
-            <template #default="{ itemClass }">
-              <h3 :class="$theme.getTextClass('primary', 'light')">Guide</h3>
-              <router-link
-                :class="[itemClass, $theme.getTextClass('primary', 'light')]"
-                to="/"
+            <h3 :class="$theme.getTextClass('primary', 'light')">Guide</h3>
+            <router-link
+              v-slot="{ navigate, href, isActive }"
+              custom
+              :to="{ name: 'home' }"
+            >
+              <ui-nav-item
+                :href="href"
+                :active="isActive"
+                @click="navigate($event)"
               >
                 Introduction
-              </router-link>
-              <h3 :class="$theme.getTextClass('primary', 'light')">Demos</h3>
-              <template v-for="(item, index) in menu">
-                <router-link
-                  :key="`item${index}`"
-                  :class="[itemClass, $theme.getTextClass('primary', 'light')]"
-                  :to="{ name: item.name }"
+              </ui-nav-item>
+            </router-link>
+            <h3 :class="$theme.getTextClass('primary', 'light')">Demos</h3>
+            <template v-for="(item, index) in menu" :key="`item${index}`">
+              <router-link
+                v-slot="{ navigate, href, isActive }"
+                custom
+                :to="{ name: item.name }"
+              >
+                <ui-nav-item
+                  :href="href"
+                  :active="isActive"
+                  @click="navigate($event)"
                 >
                   {{ item.path }}
-                </router-link>
-              </template>
+                </ui-nav-item>
+              </router-link>
             </template>
           </ui-nav>
         </ui-drawer-content>
@@ -60,31 +71,26 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { reactive, toRefs, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
 import SvgGithub from '@/components/github';
 import menu from '@/routes/demos';
 
-export default {
-  components: {
-    SvgGithub
-  },
-  data() {
-    return {
-      menu,
-      open: false
-    };
-  },
-  computed: {
-    noLayout() {
-      return /^demos.*/.test(this.$route.name);
-    }
-  },
-  mounted() {
-    this.open = window.innerWidth >= 1024;
+const state = reactive({
+  open: false
+});
 
-    window.addEventListener('balmResize', () => {
-      this.open = window.innerWidth >= 1024;
-    });
-  }
-};
+const route = useRoute();
+const noLayout = computed(() => /^demos.*/.test(route.name));
+
+onMounted(() => {
+  state.open = window.innerWidth >= 1024;
+  window.addEventListener('balmResize', () => {
+    state.open = window.innerWidth >= 1024;
+  });
+});
+
+const { open } = toRefs(state);
 </script>

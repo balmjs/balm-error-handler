@@ -1,10 +1,9 @@
-import '@/polyfill';
-import Vue from 'vue';
+import { createApp } from 'vue';
 import router from '@/routes';
 import $http from '@/plugins/http';
+import $prism from '@/plugins/prism';
 import App from '@/views/layouts/app';
-import prismjs from 'prismjs';
-import balmTracking from '../../src';
+import balmTracking from 'balm-tracking';
 // BalmUI
 import BalmUI from 'balm-ui';
 import BalmUIPlus from 'balm-ui-plus';
@@ -12,33 +11,28 @@ import BalmUIPlus from 'balm-ui-plus';
 import UiMarkdown from '@/components/markdown';
 import UiSnippet from '@/components/snippet';
 
-function createApp() {
-  balmTracking({
-    debug: true,
-    reportThreshold: 10,
-    vue: {
-      app: Vue,
-      router
-    }
-  });
+function createBalmTrackingApp() {
+  const app = createApp(App);
 
-  Vue.prototype.$prism = prismjs;
+  // balmTracking({
+  //   debug: true,
+  //   reportThreshold: 10,
+  //   vue: {
+  //     app,
+  //     router
+  //   }
+  // });
 
-  Vue.use($http);
-  Vue.use(BalmUI);
-  Vue.use(BalmUIPlus);
+  app.use(router);
+  app.use($http);
+  app.use($prism);
+  app.use(BalmUI);
+  app.use(BalmUIPlus);
 
-  Vue.component(UiMarkdown.name, UiMarkdown);
-  Vue.component(UiSnippet.name, UiSnippet);
+  app.component(UiMarkdown.name, UiMarkdown);
+  app.component(UiSnippet.name, UiSnippet);
 
-  new Vue({
-    el: '#app',
-    components: {
-      App
-    },
-    router,
-    template: '<app />'
-  });
+  app.mount('#app');
 }
 
-export default createApp;
+export default createBalmTrackingApp;

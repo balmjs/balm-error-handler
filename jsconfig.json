@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    // this enables stricter inference for data properties on `this`
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["docs/scripts/*"],
+      "balm-ui": ["node_modules/balm-ui/dist/balm-ui.d.ts"],
+      "balm-ui-plus": ["node_modules/balm-ui/dist/balm-ui-plus.d.ts"],
+      "balm-ui-next": ["node_modules/balm-ui/dist/balm-ui-next.d.ts"]
+    }
+  }
+}

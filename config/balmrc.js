@@ -1,5 +1,6 @@
 const env = require('./env');
 const path = require('path');
+const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
 
 const workspace = path.join(__dirname, '..');
@@ -39,10 +40,17 @@ function getConfig(balm) {
       },
       alias: {
         '@': resolve('docs/scripts'),
-        vue$: 'vue/dist/vue.esm.js',
+        vue$: 'vue/dist/vue.esm-bundler.js',
+        'balm-tracking': resolve('src/index.js'),
         'balm-ui-plus': 'balm-ui/dist/balm-ui-plus.js'
       },
-      plugins: [new VueLoaderPlugin()]
+      plugins: [
+        new VueLoaderPlugin(),
+        new webpack.DefinePlugin({
+          __VUE_OPTIONS_API__: JSON.stringify(true),
+          __VUE_PROD_DEVTOOLS__: JSON.stringify(false)
+        })
+      ]
     },
     assets: {
       cache: env.buildDocs

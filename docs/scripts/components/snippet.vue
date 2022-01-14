@@ -13,17 +13,20 @@
 
 <script>
 export default {
-  name: 'UiSnippet',
-  props: {
-    code: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {
-      show: false
-    };
-  }
+  name: 'ui-snippet',
+  inheritAttrs: false
 };
+</script>
+
+<script setup>
+import { ref } from 'vue';
+
+const props = defineProps({
+  code: {
+    type: String,
+    default: ''
+  }
+});
+
+const show = ref(false);
 </script>

@@ -1,4 +1,5 @@
+import '@/polyfill';
 import { isIE, killIE } from '@/kill-ie';
-import createApp from '@/main';
+import createBalmTrackingApp from '@/main';
 
-isIE ? killIE() : createApp();
+isIE ? killIE() : createBalmTrackingApp();
