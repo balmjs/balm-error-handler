@@ -14,14 +14,14 @@ import UiSnippet from '@/components/snippet';
 function createBalmTrackingApp() {
   const app = createApp(App);
 
-  // balmTracking({
-  //   debug: true,
-  //   reportThreshold: 10,
-  //   vue: {
-  //     app,
-  //     router
-  //   }
-  // });
+  balmTracking({
+    debug: true,
+    reportThreshold: 100,
+    vue: {
+      app,
+      router
+    }
+  });
 
   app.use(router);
   app.use($http);

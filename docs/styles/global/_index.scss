@@ -1,2 +1,4 @@
-@use './vendors';
 @use './reset';
+@use './vendors';
+@forward './vars';
+@use './base';

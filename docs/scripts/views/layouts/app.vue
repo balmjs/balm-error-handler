@@ -13,7 +13,7 @@
         Balm Tracking
       </router-link>
       <template #toolbar="{ itemClass }">
-        <a :class="itemClass" href="https://github.com/balmjs/balm-scroll">
+        <a :class="itemClass" href="https://github.com/balmjs/balm-tracking">
           <svg-github></svg-github>
         </a>
       </template>
@@ -62,11 +62,9 @@
         </ui-drawer-content>
       </ui-drawer>
 
-      <div :class="[$tt('body1'), 'balmui-content']">
-        <div :class="$tt('body2')">
-          <router-view></router-view>
-        </div>
-      </div>
+      <ui-drawer-app-content :class="[$tt('body1'), 'balmui-content']">
+        <router-view></router-view>
+      </ui-drawer-app-content>
     </main>
   </div>
 </template>
