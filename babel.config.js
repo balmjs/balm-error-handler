@@ -2,10 +2,12 @@ module.exports = function (api) {
   let envOptions = api.env('production')
     ? {
         modules: false,
-        useBuiltIns: 'usage',
-        corejs: { version: '3.20', proposals: true }
+        useBuiltIns: 'entry',
+        corejs: { version: '3.21', proposals: true }
       }
-    : {};
+    : {
+        modules: false
+      };
   let runtimeOptions = api.env('production') ? { corejs: 3 } : {};
 
   return {

@@ -16,6 +16,7 @@ function getConfig(balm) {
   return {
     useDefaults: !useBuild,
     server: {
+      historyOptions: true,
       next() {
         if (balm.config.env.isDev) {
           serve();
@@ -50,8 +51,10 @@ function getConfig(balm) {
         '@': resolve('docs/scripts'),
         vue$: 'vue/dist/vue.esm-bundler.js',
         'balm-tracking': resolve('src/index.js'),
-        'balm-ui-plus': 'balm-ui/dist/balm-ui-plus.js'
+        'balm-ui-source$': 'balm-ui/src/scripts/balm-ui.js',
+        'balm-ui-plus$': 'balm-ui/dist/balm-ui-plus.js'
       },
+      includeJsResource: [resolve('node_modules/balm-ui/src/scripts')],
       plugins: [
         new VueLoaderPlugin(),
         new webpack.DefinePlugin({

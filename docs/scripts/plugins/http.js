@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { saveErrorLog } from 'balm-tracking';
 
-// axios.defaults.baseURL = API_ENDPOINT;
-
 axios.interceptors.request.use(
   (config) => {
     return config;
@@ -45,6 +43,8 @@ const useHttp = () => axios;
 
 export default {
   install(app) {
+    // axios.defaults.baseURL = API_ENDPOINT;
+
     app.config.globalProperties.$http = axios;
     app.provide('http', axios);
   }

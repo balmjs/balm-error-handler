@@ -1,7 +1,7 @@
 import { detectIE } from 'balm-ui';
 
 const IE = detectIE();
-const isIE = IE && IE < 11; // Browser support IE11
+const isIE = IE && IE <= 11;
 
 const killIE = () => {
   let body = document.getElementsByTagName('body')[0];
